@@ -8,17 +8,19 @@ st.write(f'Total number of authors in the catalogue: {data.Author.nunique()}')
 
 author_substring = st.text_input('You can filter the Author Dropdown using a part of their name here.')
 if author_substring is None:
-    selected_author = st.selectbox('select an Author', data.Author.value_counts().keys())
+    selected_author = st.selectbox('Select an Author', data.Author.value_counts().keys())
 else:
     sub_selectbox = data[data.Author.str.lower().str.contains(author_substring.lower())].Author.value_counts().keys()
-    selected_author = st.selectbox('select an Author', sub_selectbox)
+    selected_author = st.selectbox('Select an Author', sub_selectbox)
 
 author_data = data.query('Author == @selected_author').reset_index(drop=True)
 
-st.write(author_data.rename(columns = {'Name':'Books'}).Books.str.title().unique())
+book_names = author_data.rename(columns = {'Name':'Books'})['Books'].value_counts().keys()
+
+st.write(book_names)
 
 if len(author_data.Series.value_counts().keys()) == 0:
     pass
 else:
-    st.write('aa', author_data.Series.value_counts().keys())
+    st.write(f'Series belonging to {selected_author}', author_data.Series.value_counts().keys())
 

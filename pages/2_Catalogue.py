@@ -37,7 +37,6 @@ for col_val, col_name in [author_surname, publisher_name, genre, booktype]:
 
 # For the numerical fields with a range
 for col_val, col_name in [page_number, year_published]:
-    st.write(col_val, col_name)
     data = data[(data[col_name] >= col_val[0]) & (data[col_name] <= col_val[1])]
 
 # # For the fields where exact matches are okay
@@ -45,4 +44,4 @@ for col_val, col_name in [page_number, year_published]:
 #     if col_val not in (None, ''):
 #         data = data[data[col_name] == col_val]
 
-st.write(data.set_index(data.columns[0]).drop(['Primary Genre numerical', 'To/From'],axis=1))
+st.write(data.set_index(data.columns[0]).drop(['Primary Genre numerical', 'To/From', 'surname'],axis=1))
