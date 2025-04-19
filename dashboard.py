@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('data/cleaned_bookshelf_09042025.csv')
 
-### Data prep for charts
+### Data prep for charts - move to data prep notebook eventually..
 ## Pub Year Pie Chart
 pub_year_years = list(df['Pub Year'].value_counts().keys())
 pub_year_counts = list(df['Pub Year'].value_counts().values)
@@ -21,12 +21,9 @@ pub_year_df.loc[pub_year_df.query("pub_year < 2017").index, 'pseudo_pub_year'] =
 pub_year_df = pub_year_df.groupby(['pseudo_pub_year'])['frequency'].sum().reset_index(drop=False).sort_values('pseudo_pub_year', ascending=False)
 pub_year_df['pseudo_pub_year'] = pub_year_df['pseudo_pub_year'].replace(2016, 'previous years')
 
-#plt.pie(pub_year_df['frequency'], labels = pub_year_df['pseudo_pub_year'], shadow=True, explode = [0,0,0,0,0,0,0,0,0.1])
-
 ## Fiction/Non-Fiction
 fic_nonfic = df.groupby('Ficiton/non-fiction').size().reset_index(drop=False)
 fic_nonfic.columns = ['fiction', 'frequency']
-#plt.pie(fic_nonfic['frequency'], labels = fic_nonfic['fiction'], explode = [0,0.1], shadow=True)
 
 ## Page Numbers
 df.loc[df.query("`Page number` < 100").index, 'page_number_group'] = '<100'
@@ -39,14 +36,10 @@ df.loc[df.query("`Page number` > 599").index, 'page_number_group'] = '600+'
 
 PageN = df.groupby('page_number_group').size().reset_index(drop=False)
 PageN.columns = ['PageN', 'frequency']
-#plt.pie(PageN['frequency'], labels = PageN['PageN'], shadow=True)
-#plt.title('Length of books')
 
 ## Genre
 prim_gen = df.groupby(['Primary Genre']).size().reset_index(drop=False)
 prim_gen.columns = ['genre', 'frequency']
-#plt.figure(figsize = (8,5))
-#plt.barh(prim_gen.sort_values('frequency', ascending=False).genre, prim_gen.sort_values('frequency', ascending=False).frequency)
 
 ## Cost of books
 df.loc[df.query("`Unit Price` < 8").index, 'price'] = '<£8'
@@ -56,8 +49,7 @@ df.loc[df.query("`Unit Price` > 11").index, 'price'] = '£12+'
 
 price_df = df.groupby('price').size().reset_index(drop=False)
 price_df.columns = ['price', 'frequency']
-#plt.pie(price_df['frequency'], labels = price_df['price'], shadow=True)
-#plt.title('Cost of books')
+
 
 ## Book Type
 df['BookType'] = df['BookType'].str.replace("Paperback With Flaps", "Paperback").replace("Paperback - A Format", "Paperback").replace("Flexiback", "Paperback").replace("Butchered Hardback", "Hardback")
@@ -69,11 +61,7 @@ booktype_df = pd.DataFrame({
     'BookType': booktype_df_keys,
     'frequency': booktype_df_vals
 }).sort_values('BookType', ascending=False).reset_index(drop=True)
-#plt.figure(figsize = (8,5))
-#plt.barh(booktype_df.sort_values('frequency', ascending=False).BookType, booktype_df.sort_values('frequency', ascending=False).frequency)
 
-
-#plt.barh(booktype_df.sort_values('frequency', ascending=False).BookType, booktype_df.sort_values('frequency', ascending=False).frequency)
 ## Define chart configs
 charts_config = [
     {
@@ -120,10 +108,7 @@ charts_config = [
     },
 ]
 
-# Create 2 columns
 col1, col2 = st.columns(2)
-
-# Loop through and plot each chart
 for i, chart in enumerate(charts_config):
     fig, ax = plt.subplots(figsize=chart.get('figsize'))
 
