@@ -2,7 +2,10 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 
+st.write('Library catalogue last updated 16th July 2023')
+
 df = pd.read_csv('data/cleaned_bookshelf_09042025.csv')
+
 
 ### Data prep for charts - move to data prep notebook eventually..
 ## Pub Year Pie Chart
