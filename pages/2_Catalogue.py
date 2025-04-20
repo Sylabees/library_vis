@@ -3,7 +3,7 @@ import streamlit as st
 
 data = pd.read_csv('data/cleaned_bookshelf_09042025.csv')
 
-st.write(f'Total number of books in the library {data['QTY'].sum()}')
+st.write(f'Total number of books in the library: {data['QTY'].sum()}')
 
 #reshuffle booktype list
 booktype_list = pd.Series(data['BookType'].unique())
