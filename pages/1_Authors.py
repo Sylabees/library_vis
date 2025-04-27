@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-data = pd.read_csv('data/cleaned_bookshelf_09042025.csv')
+data = pd.read_csv('data/bookshelf_order_250427.csv')
 st.write('## Authors')
 
 st.write(f'Total number of authors in the catalogue: {data.Author.nunique()}')
