@@ -2,9 +2,9 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 
-st.write('Library catalogue last updated 16th July 2023')
+df = pd.read_csv('data/cleaned_bookshelf_27042025.csv')
 
-df = pd.read_csv('data/bookshelf_order_250427.csv')
+st.write('Library catalogue last updated 27th April 2025')
 
 
 ### Data prep for charts - move to data prep notebook eventually..
