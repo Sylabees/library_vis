@@ -25,17 +25,9 @@ pub_year_df = pub_year_df.groupby(['pseudo_pub_year'])['frequency'].sum().reset_
 pub_year_df['pseudo_pub_year'] = pub_year_df['pseudo_pub_year'].replace(2016, 'previous years')
 
 ## Fiction/Non-Fiction
-fic_nonfic = df.groupby('Ficiton/non-fiction').size().reset_index(drop=False)
+fic_nonfic = df.groupby('Fiction / non-fiction').size().reset_index(drop=False)
 fic_nonfic.columns = ['fiction', 'frequency']
 
-## Page Numbers
-df.loc[df.query("`Page number` < 100").index, 'page_number_group'] = '<100'
-df.loc[df.query("`Page number` < 200 and `Page number` > 99").index, 'page_number_group'] = '100-200'
-df.loc[df.query("`Page number`< 300 and `Page number` > 199").index, 'page_number_group'] = '200-300'
-df.loc[df.query("`Page number` < 400 and `Page number` > 299").index, 'page_number_group'] = '300-400'
-df.loc[df.query("`Page number` < 500 and `Page number` > 399").index, 'page_number_group'] = '400-500'
-df.loc[df.query("`Page number` < 600 and `Page number` > 499").index, 'page_number_group'] = '500-600'
-df.loc[df.query("`Page number` > 599").index, 'page_number_group'] = '600+'
 
 PageN = df.groupby('page_number_group').size().reset_index(drop=False)
 PageN.columns = ['PageN', 'frequency']
@@ -45,17 +37,12 @@ prim_gen = df.groupby(['Primary Genre']).size().reset_index(drop=False)
 prim_gen.columns = ['genre', 'frequency']
 
 ## Cost of books
-df.loc[df.query("`Unit Price` < 8").index, 'price'] = '<£8'
-df.loc[df.query("`Unit Price` < 10 and `Unit Price` > 7").index, 'price'] = '£8-£10'
-df.loc[df.query("`Unit Price` < 12 and `Unit Price` > 9").index, 'price'] = '£10-£12'
-df.loc[df.query("`Unit Price` > 11").index, 'price'] = '£12+'
-
 price_df = df.groupby('price').size().reset_index(drop=False)
 price_df.columns = ['price', 'frequency']
 
 
 ## Book Type
-df['BookType'] = df['BookType'].str.replace("Paperback With Flaps", "Paperback").replace("Paperback - A Format", "Paperback").replace("Flexiback", "Paperback").replace("Butchered Hardback", "Hardback")
+df['BookType'] = df['BookType'].str.replace("Paperback With Flaps", "Paperback").replace("Flexiback", "Paperback").replace("Butchered Hardback", "Hardback")
 
 booktype_df_keys = list(df['BookType'].value_counts().keys())
 booktype_df_vals = list(df['BookType'].value_counts().values)
